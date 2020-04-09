@@ -15,7 +15,7 @@ jobs:
     - name: Android
       run: |
         nuget restore
-        msbuild pms.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
+        msbuild pms.Android/pms.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
         
   iOS:
     runs-on: macos-latest
