@@ -8,19 +8,9 @@
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
-                <views:ItemsPage />
+                <views:HomePage />
             </x:Arguments>
-        </NavigationPage>
-        <NavigationPage Title="About">
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_about.png" />
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:AboutPage />
-            </x:Arguments>
-        </NavigationPage>
+        </NavigationPage>        
 
         <NavigationPage Title="Camera">
             <NavigationPage.Icon>
@@ -30,6 +20,17 @@
             </NavigationPage.Icon>
             <x:Arguments>
                 <views:CameraPage />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="About">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_about.png" />
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:AboutPage />
             </x:Arguments>
         </NavigationPage>
 

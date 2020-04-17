@@ -1,7 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using pms.Services;
 using pms.Views;
 
 namespace pms
@@ -11,9 +10,6 @@ namespace pms
 
         public App()
         {
-            InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new MainPage();
         }
 
