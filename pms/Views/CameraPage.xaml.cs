@@ -19,7 +19,7 @@ namespace pms.Views
             InitializeComponent();
         }
 
-        // TODO: transfer the photo for analyse
+        // TODO: transfer the photo for analyze
         void ReadPhoto(MediaFile photo)
         {
             if (photo != null)
