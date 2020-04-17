@@ -12,7 +12,7 @@ namespace pms.Views
     {
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent();   
         }
     }
 }

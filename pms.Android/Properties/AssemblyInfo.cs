@@ -16,6 +16,16 @@ using Android.App;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 
+// Added
+
+/*
+[assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
+[assembly: UsesPermission(Android.Manifest.Permission.ReadExternalStorage)]
+[assembly: UsesPermission(Android.Manifest.Permission.Camera)]
+[assembly: UsesFeature("android.hardware.camera", Required = true)]
+[assembly: UsesFeature("android.hardware.camera.autofocus", Required = true)]
+*/
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
