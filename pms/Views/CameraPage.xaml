@@ -16,7 +16,8 @@
         <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <Image x:Name="PhotoImage" />
-    <Button x:Name="CameraButton" Text="Take Photo" Grid.Row="1" />
+    <Image x:Name="PhotoImage" Grid.Row="1" />
+    <Button Clicked="CameraButton_OnClicked" x:Name="CameraButton" Text="Take Photo" Grid.Row="2" />
+    <Button Clicked="MediaPickButton_OnClicked" x:Name="MediaPickButton" Text="Pick Photo" Grid.Row="3" />
 </Grid>
 </ContentPage>
