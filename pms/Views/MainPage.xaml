@@ -1,5 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" xmlns:views="clr-namespace:pms.Views" x:Class="pms.Views.MainPage">
+<TabbedPage Visual="Material" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" xmlns:views="clr-namespace:pms.Views" x:Class="pms.Views.MainPage">
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#2e7d32</Color>
+            <Color x:Key="Accent">#ad1457</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+            <Color x:Key="Background">#333333</Color>
+        </ResourceDictionary>
+        <Style TargetType="StackLayout">
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="Spacing" Value="20"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="HeightRequest" Value="100" />
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </TabbedPage.Resources>
+
     <TabbedPage.Children>
         <NavigationPage Title="Browse">
             <NavigationPage.Icon>
@@ -35,4 +55,5 @@
         </NavigationPage>
 
     </TabbedPage.Children>
+
 </TabbedPage>
