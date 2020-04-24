@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -19,12 +18,13 @@ namespace pms.Views
             InitializeComponent();
         }
 
-        // TODO: transfer the photo for analyze
+        // Reads the given photo and transfers it for analyze
         void ReadPhoto(MediaFile photo)
         {
             if (photo != null)
             {
-                PhotoImage.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
+                // TODO: transfer the photo for analyze
+                ImageSource img = ImageSource.FromStream(() => { return photo.GetStream(); });
             }
         }
 
