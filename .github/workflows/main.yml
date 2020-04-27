@@ -24,6 +24,7 @@ jobs:
     - name: iOS
       run: |
         nuget restore
+        sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
         msbuild pms.iOS/pms.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Debug
         
   misspell:
