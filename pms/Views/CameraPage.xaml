@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="pms.Views.CameraPage" xmlns:vm="clr-namespace:pms.ViewModels" Title="{Binding Title}">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="pms.Views.CameraPage" xmlns:vm="clr-namespace:pms.ViewModels" xmlns:pms="clr-namespace:pms" Title="{Binding Title}">
     <ContentPage.BindingContext>
         <vm:CameraViewModel />
     </ContentPage.BindingContext>
@@ -9,8 +9,32 @@
     </Grid.RowDefinitions>
 
     <StackLayout Orientation="Vertical" VerticalOptions="Center" Grid.Row="1">
-        <Button Clicked="CameraButton_OnClicked" x:Name="CameraButton" Text="Take Photo" />
-        <Button Clicked="MediaPickButton_OnClicked" x:Name="MediaPickButton" Text="Pick Photo" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Clicked="CameraButton_OnClicked" x:Name="CameraButton" />
+            <pms:FontAwesomeLabel
+                Grid.Row="0"
+                Text="{x:Static pms:Icon.FACamera}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="50"
+                TextColor="White" />
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Button Clicked="MediaPickButton_OnClicked" x:Name="MediaPickButton" />
+            <pms:FontAwesomeLabel
+                Grid.Row="0"
+                Text="{x:Static pms:Icon.FAImage}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="50"
+                TextColor="White" />
+        </Grid>
     </StackLayout>
 
 </Grid>
