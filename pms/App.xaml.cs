@@ -1,16 +1,17 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using pms.Views;
+﻿using Xamarin.Forms;
+
+using pms.Services;
 
 namespace pms
 {
     public partial class App : Application
     {
-
         public App()
         {
-            MainPage = new MainPage();
+            InitializeComponent();
+
+            DependencyService.Register<MockDataStore>();
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()
