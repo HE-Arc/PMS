@@ -46,7 +46,6 @@ namespace pms.Views
                 viewModel.IsBusy = true;
         }
 
-        /*
         // Reads the given photo and transfers it for analyze
         void ReadPhoto(MediaFile photo)
         {
@@ -153,6 +152,5 @@ namespace pms.Views
                 ReadPhoto(photo);
             }
         }
-        */
     }
 }

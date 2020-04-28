@@ -1,22 +1,82 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="pms.Views.MainPage" Title="{Binding Title}" x:Name="Home">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pms="clr-namespace:pms" mc:Ignorable="d" x:Class="pms.Views.MainPage" Title="{Binding Title}" x:Name="Home">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#2e7d32</Color>
+            <Color x:Key="Accent">#ad1457</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+            <Color x:Key="Background">#333333</Color>
+        </ResourceDictionary>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="BorderColor" Value="#000000" />
+            <Setter Property="HeightRequest" Value="60" />
+            <Setter Property="WidthRequest" Value="120" />
+            <Setter Property="Margin" Value="8,0" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddProcessedImage_Clicked" />
     </ContentPage.ToolbarItems>
-    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadProcessedImageCommand}">
-        <CollectionView x:Name="ProcessedImagesCollection" ItemsSource="{Binding ProcessedImages}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10">
-                        <Label Text="{Binding Datetime}" LineBreakMode="NoWrap" FontSize="16" />
-                        <Label Text="{Binding Count}" LineBreakMode="NoWrap" FontSize="13" />
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnProcessedImageSelected">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0" Orientation="Vertical" VerticalOptions="StartAndExpand">
+            <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadProcessedImageCommand}">
+            <CollectionView x:Name="ProcessedImagesCollection" ItemsSource="{Binding ProcessedImages}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Datetime}" LineBreakMode="WordWrap" />
+                            <Label Text="{Binding Count}" LineBreakMode="WordWrap" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnProcessedImageSelected">
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </RefreshView>
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" VerticalOptions="End" Orientation="Horizontal" HorizontalOptions="Fill" BackgroundColor="{StaticResource Background}" Padding="0,20" >
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Button HorizontalOptions="Fill" Grid.Row="0" BackgroundColor="{StaticResource Accent}"/>
+                <pms:FontAwesomeLabel
+                    Grid.Row="0"
+                    Text="{x:Static pms:Icon.FACamera}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="30"
+                    TextColor="White" />
+                    <!-- Life Hack : otherwise, cannot click on the icon :) -->
+                    <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="CameraButton_OnClicked" x:Name="CameraButton" />
+                </Grid>
+                <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Button HorizontalOptions="Fill" />
+                <pms:FontAwesomeLabel
+                    Grid.Row="0"
+                    Text="{x:Static pms:Icon.FAImage}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="30"
+                    TextColor="White" />
+                    <!-- Life Hack : otherwise, cannot click on the icon :) -->
+                    <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="MediaPickButton_OnClicked" x:Name="MediaPickButton" />
+                </Grid>
+            </StackLayout>
+        </StackLayout>        
+    </Grid>
 </ContentPage>

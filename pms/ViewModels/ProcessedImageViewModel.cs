@@ -18,7 +18,7 @@ namespace pms.ViewModels
 
         public ProcessedImageViewModel()
         {
-            Title = "Home";
+            Title = "PMS";
             DataStore = new MockDataStore();
             ProcessedImages = new ObservableCollection<ProcessedImage>();
             LoadProcessedImageCommand = new Command(async () => await ExecuteLoadProcessedImagesCommand());
