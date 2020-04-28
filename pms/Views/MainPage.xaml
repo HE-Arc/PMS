@@ -9,22 +9,21 @@
         </ResourceDictionary>
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="BorderColor" Value="#000000" />
             <Setter Property="HeightRequest" Value="60" />
             <Setter Property="WidthRequest" Value="120" />
             <Setter Property="Margin" Value="8,0" />
         </Style>
     </ContentPage.Resources>
-    <ContentPage.ToolbarItems>
+    <!--ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddProcessedImage_Clicked" />
-    </ContentPage.ToolbarItems>
+    </-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
+        <!-- Layout taking all the remaining space -->
         <StackLayout Grid.Row="0" Orientation="Vertical" VerticalOptions="StartAndExpand">
             <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadProcessedImageCommand}">
             <CollectionView x:Name="ProcessedImagesCollection" ItemsSource="{Binding ProcessedImages}">
@@ -44,13 +43,16 @@
             </RefreshView>
         </StackLayout>
 
+        <!-- Bottom fixed layout -->
         <StackLayout Grid.Row="1" VerticalOptions="End" Orientation="Horizontal" HorizontalOptions="Fill" BackgroundColor="{StaticResource Background}" Padding="0,20" >
+            <!-- Horizontally centered layout -->
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <!-- Trick to create a « ButtonIcon » -->
                 <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button HorizontalOptions="Fill" Grid.Row="0" BackgroundColor="{StaticResource Accent}"/>
+                <Button Grid.Row="0" />
                 <pms:FontAwesomeLabel
                     Grid.Row="0"
                     Text="{x:Static pms:Icon.FACamera}"
@@ -61,11 +63,12 @@
                     <!-- Life Hack : otherwise, cannot click on the icon :) -->
                     <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="CameraButton_OnClicked" x:Name="CameraButton" />
                 </Grid>
+                <!-- Trick to create a « ButtonIcon » -->
                 <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button HorizontalOptions="Fill" />
+                <Button Grid.Row="0" />
                 <pms:FontAwesomeLabel
                     Grid.Row="0"
                     Text="{x:Static pms:Icon.FAImage}"

@@ -33,11 +33,6 @@ namespace pms.Views
             await Navigation.PushAsync(new ProcessedImageDetailPage(new ProcessedImageDetailViewModel(processedImage)));
         }
 
-        async void AddProcessedImage_Clicked(object sender, EventArgs e)
-        {
-            //await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
