@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="pms.Views.MainPage" Title="{Binding Title}" x:Name="Home">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddProcessedImage_Clicked" />
+    </ContentPage.ToolbarItems>
+    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadProcessedImageCommand}">
+        <CollectionView x:Name="ProcessedImagesCollection" ItemsSource="{Binding ProcessedImages}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding Datetime}" LineBreakMode="NoWrap" FontSize="16" />
+                        <Label Text="{Binding Count}" LineBreakMode="NoWrap" FontSize="13" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnProcessedImageSelected">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

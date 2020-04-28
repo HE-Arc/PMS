@@ -21,4 +21,16 @@
       <HintPath>..\..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\10.2.0.100\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

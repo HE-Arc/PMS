@@ -6,18 +6,47 @@ using Xamarin.Essentials;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
-namespace pms
+using pms.Models;
+using pms.Views;
+using pms.ViewModels;
+
+namespace pms.Views
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        ProcessedImageViewModel viewModel;
+
         public MainPage()
         {
             InitializeComponent();
+
+            BindingContext = viewModel = new ProcessedImageViewModel();
         }
 
+        async void OnProcessedImageSelected(object sender, EventArgs args)
+        {
+            var layout = (BindableObject)sender;
+            var processedImage = (ProcessedImage)layout.BindingContext;
+            await Navigation.PushAsync(new ProcessedImageDetailPage(new ProcessedImageDetailViewModel(processedImage)));
+        }
+
+        async void AddProcessedImage_Clicked(object sender, EventArgs e)
+        {
+            //await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (viewModel.ProcessedImages.Count == 0)
+                viewModel.IsBusy = true;
+        }
+
+        /*
         // Reads the given photo and transfers it for analyze
         void ReadPhoto(MediaFile photo)
         {
@@ -124,5 +153,6 @@ namespace pms
                 ReadPhoto(photo);
             }
         }
+        */
     }
 }
