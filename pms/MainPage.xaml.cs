@@ -6,14 +6,14 @@ using Xamarin.Essentials;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
-namespace pms.Views
+namespace pms
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class CameraPage : ContentPage
+    public partial class MainPage : ContentPage
     {
-        public CameraPage()
+        public MainPage()
         {
             InitializeComponent();
         }
@@ -71,7 +71,7 @@ namespace pms.Views
         // Checks wether the camera plugin is available and supported
         async Task<bool> CheckCameraPlugin()
         {
-            if (! CrossMedia.Current.IsCameraAvailable || ! CrossMedia.Current.IsTakePhotoSupported)
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
                 await DisplayAlert("Camera not supported", "No camera available.", "OK");
                 CameraButton.IsEnabled = false;
@@ -85,7 +85,7 @@ namespace pms.Views
         // Checks wether the pick photo plugin is available and supported
         async Task<bool> CheckPickPhotoPlugin()
         {
-            if (! CrossMedia.Current.IsPickPhotoSupported)
+            if (!CrossMedia.Current.IsPickPhotoSupported)
             {
                 await DisplayAlert("Pick photo not supported", "No media picker available.", "OK");
                 MediaPickButton.IsEnabled = false;
@@ -98,7 +98,7 @@ namespace pms.Views
 
         // Click on Take Photo button
         async void CameraButton_OnClicked(object sender, EventArgs e)
-		{
+        {
             if (await CheckCameraPermission() && await CheckCameraPlugin())
             {
                 // Supplies media options for saving the photo after it is taken

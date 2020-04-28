@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage Visual="Material" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pms="clr-namespace:pms" mc:Ignorable="d" x:Class="pms.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#2e7d32</Color>
+            <Color x:Key="Accent">#ad1457</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+            <Color x:Key="Background">#333333</Color>
+        </ResourceDictionary>
+        <Style TargetType="StackLayout">
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="Spacing" Value="20"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="HeightRequest" Value="100" />
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+        <StackLayout Orientation="Vertical" VerticalOptions="Center" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Clicked="CameraButton_OnClicked" x:Name="CameraButton" />
+                <pms:FontAwesomeLabel
+                    Grid.Row="0"
+                    Text="{x:Static pms:Icon.FACamera}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="50"
+                    TextColor="White" />
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Button Clicked="MediaPickButton_OnClicked" x:Name="MediaPickButton" />
+                <pms:FontAwesomeLabel
+                    Grid.Row="0"
+                    Text="{x:Static pms:Icon.FAImage}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="50"
+                    TextColor="White" />
+            </Grid>
+        </StackLayout>
+
+    </Grid>
+
+</ContentPage>
