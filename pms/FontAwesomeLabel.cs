@@ -23,5 +23,6 @@ namespace pms
     {
         public static readonly string FACamera = "\uf030";
         public static readonly string FAImage = "\uf03e";
+        public static readonly string FASync = "\uf2f1";
     }
 }

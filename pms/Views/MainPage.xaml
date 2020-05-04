@@ -14,9 +14,6 @@
             <Setter Property="Margin" Value="8,0" />
         </Style>
     </ContentPage.Resources>
-    <!--ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="AddProcessedImage_Clicked" />
-    </-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -30,8 +27,10 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10">
-                            <Label Text="{Binding Datetime}" LineBreakMode="WordWrap" />
-                            <Label Text="{Binding Count}" LineBreakMode="WordWrap" />
+                            <Label Text="{Binding datetime}" LineBreakMode="WordWrap" />
+                            <Label Text="{Binding count}" LineBreakMode="WordWrap" />
+                            <Image Source="https://suivezlezebre.com/wp-content/uploads/2019/11/te%CC%81moignage-de-ze%CC%80bre-surdoue%CC%81-philo-cognitif-1024x505.jpeg" />
+                            <!--Image Source="https://pms.srvz-webapp.he-arc.ch/api/image_file/{Binding base_image}/base" /-->
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnProcessedImageSelected">
                                 </TapGestureRecognizer>
@@ -41,6 +40,21 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             </RefreshView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" />
+                <pms:FontAwesomeLabel
+                    Grid.Row="0"
+                    Text="{x:Static pms:Icon.FASync}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="30"
+                    TextColor="White" />
+                    <!-- Life Hack : otherwise, cannot click on the icon :) -->
+                    <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="LoadMoreImagesButton_OnClicked" x:Name="LoadMoreImagesButton" />
+                </Grid>
         </StackLayout>
 
         <!-- Bottom fixed layout -->

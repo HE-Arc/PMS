@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -6,8 +7,11 @@ using Xamarin.Essentials;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
+using System.Net;
+using Newtonsoft.Json;
+using System.Net.Http;
+
 using pms.Models;
-using pms.Views;
 using pms.ViewModels;
 
 namespace pms.Views
@@ -42,12 +46,44 @@ namespace pms.Views
         }
 
         // Reads the given photo and transfers it for analyze
-        void ReadPhoto(MediaFile photo)
+        async Task ReadPhotoAsync(MediaFile photo)
         {
             if (photo != null)
             {
-                // TODO: transfer the photo for analyze
-                ImageSource img = ImageSource.FromStream(() => { return photo.GetStream(); });
+                byte[] imageData;
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    photo.GetStream().CopyTo(memoryStream);
+                    photo.Dispose();
+
+                    imageData = memoryStream.ToArray();
+                }
+
+                // POST form
+                MultipartFormDataContent formData = new MultipartFormDataContent();
+                formData.Add(new ByteArrayContent(imageData), "base_image");
+
+                // Sends the image
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.PostAsync(ProcessedImageViewModel.URL_UPLOAD_IMAGE, formData);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    // Updates the LastID property when a new image is added
+                    viewModel.LastID++;
+
+                    // Loads the last image
+                    var imageJson = await httpClient.GetStringAsync(ProcessedImageViewModel.URL_LOAD_IMAGE_BY_ID + viewModel.LastID);
+
+                    // Adds the image to the beginning of the list
+                    ProcessedImage image = JsonConvert.DeserializeObject<ProcessedImage>(imageJson);
+                    viewModel.ProcessedImages.Insert(0, image);
+                }
+                else
+                {
+                    Console.WriteLine("Error while loading the last processed image...");
+                }
             }
         }
 
@@ -133,7 +169,7 @@ namespace pms.Views
 
                 // Takes a photo
                 var photo = await CrossMedia.Current.TakePhotoAsync(mediaOptions);
-                ReadPhoto(photo);
+                await ReadPhotoAsync(photo);
             }
         }
 
@@ -144,7 +180,19 @@ namespace pms.Views
             if (await CheckStorageReadPermission() && await CheckPickPhotoPlugin())
             {
                 var photo = await CrossMedia.Current.PickPhotoAsync();
-                ReadPhoto(photo);
+                await ReadPhotoAsync(photo);
+            }
+        }
+
+        // Click on Load More Images button
+        async void LoadMoreImagesButton_OnClicked(object sender, EventArgs e)
+        {
+            bool canLoadMore = await viewModel.LoadProcessedImages();
+
+            if (! canLoadMore)
+            {
+                Button btn = (Button)sender;
+                btn.IsVisible = false;
             }
         }
     }

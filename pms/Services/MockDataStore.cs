@@ -14,11 +14,11 @@ namespace pms.Services
         {
             processedImages = new List<ProcessedImage>
             {
-                new ProcessedImage { Id = Guid.NewGuid().ToString(), Datetime = "26.04.2020 17:18", Image = "img", Count = 100 },
-                new ProcessedImage { Id = Guid.NewGuid().ToString(), Datetime = "27.04.2020 17:18", Image = "img", Count = 100 },
-                new ProcessedImage { Id = Guid.NewGuid().ToString(), Datetime = "28.04.2020 17:18", Image = "img", Count = 100 },
-                new ProcessedImage { Id = Guid.NewGuid().ToString(), Datetime = "28.04.2020 17:18", Image = "img", Count = 100 },
-                new ProcessedImage { Id = Guid.NewGuid().ToString(), Datetime = "28.04.2020 17:18", Image = "img", Count = 100 },
+                new ProcessedImage { id = 1, base_image = "", processed_image = "", datetime = "26.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 2, base_image = "", processed_image = "", datetime = "27.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 3, base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 4, base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 5, base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
             };
         }
 
@@ -31,24 +31,24 @@ namespace pms.Services
 
         public async Task<bool> UpdateItemAsync(ProcessedImage processedImage)
         {
-            var oldProcessedImage = processedImages.Where((ProcessedImage arg) => arg.Id == processedImage.Id).FirstOrDefault();
+            var oldProcessedImage = processedImages.Where((ProcessedImage arg) => arg.id == processedImage.id).FirstOrDefault();
             processedImages.Remove(oldProcessedImage);
             processedImages.Add(processedImage);
 
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(int id)
         {
-            var oldProcessedImage = processedImages.Where((ProcessedImage arg) => arg.Id == id).FirstOrDefault();
+            var oldProcessedImage = processedImages.Where((ProcessedImage arg) => arg.id == id).FirstOrDefault();
             processedImages.Remove(oldProcessedImage);
 
             return await Task.FromResult(true);
         }
 
-        public async Task<ProcessedImage> GetItemAsync(string id)
+        public async Task<ProcessedImage> GetItemAsync(int id)
         {
-            return await Task.FromResult(processedImages.FirstOrDefault(s => s.Id == id));
+            return await Task.FromResult(processedImages.FirstOrDefault(s => s.id == id));
         }
 
         public async Task<IEnumerable<ProcessedImage>> GetItemsAsync(bool forceRefresh = false)

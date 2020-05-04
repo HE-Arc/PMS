@@ -8,7 +8,7 @@ namespace pms.ViewModels
 
         public ProcessedImageDetailViewModel(ProcessedImage processedImage = null)
         {
-            Title = processedImage.Datetime;
+            Title = processedImage.datetime;
             ProcessedImage = processedImage;
         }
     }
