@@ -4,7 +4,7 @@ namespace pms.Models
     public class ProcessedImage
     {
         // .NET properties naming convention not respected here because the backend
-        // API is developped in Django ; maybe it is possible to format the data
+        // API is developed in Django ; maybe it is possible to format the data
         // before sending it here in order to respect the naming convention.
 
         public int id { get; set; }
