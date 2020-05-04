@@ -30,8 +30,9 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Padding="10">
-                            <Label Text="{Binding Datetime}" LineBreakMode="WordWrap" />
-                            <Label Text="{Binding Count}" LineBreakMode="WordWrap" />
+                            <Label Text="{Binding datetime}" LineBreakMode="WordWrap" />
+                            <Label Text="{Binding count}" LineBreakMode="WordWrap" />
+                            <Image Source="https://suivezlezebre.com/wp-content/uploads/2019/11/te%CC%81moignage-de-ze%CC%80bre-surdoue%CC%81-philo-cognitif-1024x505.jpeg" />
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnProcessedImageSelected">
                                 </TapGestureRecognizer>

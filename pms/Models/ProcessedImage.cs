@@ -3,12 +3,18 @@ namespace pms.Models
 {
     public class ProcessedImage
     {
-        public string Id { get; set; }
+        // .NET properties naming convention not respected here because the backend
+        // API is developped in Django ; maybe it is possible to format the data
+        // before sending it here in order to respect the naming convention.
 
-        public string Datetime { get; set; }
+        public string id { get; set; }
 
-        public string Image { get; set; }
+        public string base_image { get; set; }
 
-        public int Count { get; set; }
+        public string processed_image { get; set; }
+
+        public string datetime { get; set; }
+
+        public int count { get; set; }
     }
 }
