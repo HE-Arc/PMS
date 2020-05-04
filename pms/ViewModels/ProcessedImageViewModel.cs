@@ -20,16 +20,17 @@ namespace pms.ViewModels
         public static string URL_LOAD_IMAGE_BY_ID = "https://pms.srvz-webapp.he-arc.ch/api/image/";
 
         public MockDataStore DataStore { get; set;}
-        public ObservableCollection<ProcessedImage> ProcessedImages { get; set; }
+        public List<ProcessedImage> ProcessedImages { get; set; }
         public Command LoadProcessedImageCommand { get; set; }
 
         public int LastID { get; set; }
+        public int FromID { get; set; }
 
         public ProcessedImageViewModel()
         {
             Title = "PMS";
             DataStore = new MockDataStore();
-            ProcessedImages = new ObservableCollection<ProcessedImage>();
+            ProcessedImages = new List<ProcessedImage>();
             LoadProcessedImageCommand = new Command(async () => await ExecuteLoadProcessedImagesCommand());
             /*
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
@@ -49,6 +50,7 @@ namespace pms.ViewModels
             {
                 ProcessedImages.Clear();
 
+                //TODO
                 //LoadProcessedImages();
 
                 var items = await DataStore.GetItemsAsync(true);
@@ -79,19 +81,21 @@ namespace pms.ViewModels
                 url += "?from_id=" + from_id;
             }
 
+            // Loads the images
             var httpClient = new HttpClient();
-            var response = await httpClient.GetStringAsync(url);
+            var imagesData = await httpClient.GetStringAsync(url);
 
-            var images = JsonConvert.DeserializeObject<List<ProcessedImage>>(response);
-            //var image = JsonConvert.DeserializeObject(response);
-
-            //TODO: LastID
-            LastID = 0;
-
-            foreach (var img in images)
+            // Adds the images to the list
+            List<ProcessedImage> processedImages = JsonConvert.DeserializeObject<List<ProcessedImage>>(imagesData);
+            foreach (ProcessedImage processedImage in processedImages)
             {
-                //TODO: Add images to ProcessedImages list
-                
+                ProcessedImages.Add(processedImage);
+            }
+
+            // Updates the FromID property
+            if (FromID > 0)
+            {
+                FromID = ProcessedImages[ProcessedImages.Count - 1].id - 1;
             }
         }
     }

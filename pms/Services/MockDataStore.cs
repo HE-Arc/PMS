@@ -14,11 +14,11 @@ namespace pms.Services
         {
             processedImages = new List<ProcessedImage>
             {
-                new ProcessedImage { id = Guid.NewGuid().ToString(), base_image = "", processed_image = "", datetime = "26.04.2020 17:18", count = 100 },
-                new ProcessedImage { id = Guid.NewGuid().ToString(), base_image = "", processed_image = "", datetime = "27.04.2020 17:18", count = 100 },
-                new ProcessedImage { id = Guid.NewGuid().ToString(), base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
-                new ProcessedImage { id = Guid.NewGuid().ToString(), base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
-                new ProcessedImage { id = Guid.NewGuid().ToString(), base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 1, base_image = "", processed_image = "", datetime = "26.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 2, base_image = "", processed_image = "", datetime = "27.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 3, base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 4, base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
+                new ProcessedImage { id = 5, base_image = "", processed_image = "", datetime = "28.04.2020 17:18", count = 100 },
             };
         }
 
@@ -38,7 +38,7 @@ namespace pms.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(int id)
         {
             var oldProcessedImage = processedImages.Where((ProcessedImage arg) => arg.id == id).FirstOrDefault();
             processedImages.Remove(oldProcessedImage);
@@ -46,7 +46,7 @@ namespace pms.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<ProcessedImage> GetItemAsync(string id)
+        public async Task<ProcessedImage> GetItemAsync(int id)
         {
             return await Task.FromResult(processedImages.FirstOrDefault(s => s.id == id));
         }
