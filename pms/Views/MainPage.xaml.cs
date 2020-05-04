@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using System.Net.Http;
 
 using pms.Models;
-using pms.Views;
 using pms.ViewModels;
 
 namespace pms.Views
@@ -182,6 +181,18 @@ namespace pms.Views
             {
                 var photo = await CrossMedia.Current.PickPhotoAsync();
                 await ReadPhotoAsync(photo);
+            }
+        }
+
+        // Click on Load More Images button
+        async void LoadMoreImagesButton_OnClicked(object sender, EventArgs e)
+        {
+            bool canLoadMore = await viewModel.LoadProcessedImages();
+
+            if (! canLoadMore)
+            {
+                Button btn = (Button)sender;
+                btn.IsVisible = false;
             }
         }
     }

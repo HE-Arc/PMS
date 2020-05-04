@@ -32,14 +32,6 @@ namespace pms.ViewModels
             DataStore = new MockDataStore();
             ProcessedImages = new List<ProcessedImage>();
             LoadProcessedImageCommand = new Command(async () => await ExecuteLoadProcessedImagesCommand());
-            /*
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-            {
-                var newItem = item as Item;
-                Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
-            });
-            */
         }
 
         async Task ExecuteLoadProcessedImagesCommand()
@@ -50,9 +42,9 @@ namespace pms.ViewModels
             {
                 ProcessedImages.Clear();
 
-                //TODO
-                //LoadProcessedImages();
-
+                // TODO
+                // LoadProcessedImages();
+                // Remove code below then
                 var items = await DataStore.GetItemsAsync(true);
                 foreach (var item in items)
                 {
@@ -70,15 +62,15 @@ namespace pms.ViewModels
         }
 
         // Loads processed images from the backend API
-        public async void LoadProcessedImages(int from_id = 0)
+        public async Task<bool> LoadProcessedImages()
         {
             // First load
             string url = URL_LOAD_IMAGES;
 
             // Loads from the given id
-            if (from_id > 0)
+            if (FromID > 0)
             {
-                url += "?from_id=" + from_id;
+                url += "?from_id=" + FromID;
             }
 
             // Loads the images
@@ -93,10 +85,10 @@ namespace pms.ViewModels
             }
 
             // Updates the FromID property
-            if (FromID > 0)
-            {
-                FromID = ProcessedImages[ProcessedImages.Count - 1].id - 1;
-            }
+            FromID = ProcessedImages[ProcessedImages.Count - 1].id - 1;
+
+            // Can load more images
+            return FromID > 0;
         }
     }
 }
