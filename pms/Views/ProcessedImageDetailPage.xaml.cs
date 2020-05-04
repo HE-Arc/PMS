@@ -2,6 +2,9 @@
 using Xamarin.Forms;
 
 using pms.ViewModels;
+using Xamarin.Forms.Internals;
+using System;
+using System.Diagnostics;
 
 namespace pms.Views
 {
@@ -14,9 +17,19 @@ namespace pms.Views
 
         public ProcessedImageDetailPage(ProcessedImageDetailViewModel viewModel)
         {
-            //InitializeComponent();
+            InitializeComponent();
 
             BindingContext = this.viewModel = viewModel;
+        }
+
+        private void PlusButton_OnClicked(object sender, EventArgs e)
+        {
+            viewModel.Count += 1;
+        }
+
+        private void MinusButton_OnClicked(object sender, EventArgs e)
+        {
+            viewModel.Count -= 1;
         }
     }
 }
