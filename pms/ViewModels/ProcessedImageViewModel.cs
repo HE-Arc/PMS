@@ -15,11 +15,15 @@ namespace pms.ViewModels
 {
     public class ProcessedImageViewModel : BaseViewModel
     {
-        public const string URL_GET_IMAGES = "https://pms.srvz-webapp.he-arc.ch/api/images";
+        public static string URL_UPLOAD_IMAGE = "https://pms.srvz-webapp.he-arc.ch/api/upload";
+        public static string URL_LOAD_IMAGES = "https://pms.srvz-webapp.he-arc.ch/api/images";
+        public static string URL_LOAD_IMAGE_BY_ID = "https://pms.srvz-webapp.he-arc.ch/api/image/";
 
         public MockDataStore DataStore { get; set;}
         public ObservableCollection<ProcessedImage> ProcessedImages { get; set; }
         public Command LoadProcessedImageCommand { get; set; }
+
+        public int LastID { get; set; }
 
         public ProcessedImageViewModel()
         {
@@ -67,7 +71,7 @@ namespace pms.ViewModels
         public async void LoadProcessedImages(int from_id = 0)
         {
             // First load
-            string url = URL_GET_IMAGES;
+            string url = URL_LOAD_IMAGES;
 
             // Loads from the given id
             if (from_id > 0)
@@ -80,9 +84,14 @@ namespace pms.ViewModels
 
             var images = JsonConvert.DeserializeObject<List<ProcessedImage>>(response);
             //var image = JsonConvert.DeserializeObject(response);
+
+            //TODO: LastID
+            LastID = 0;
+
             foreach (var img in images)
             {
-
+                //TODO: Add images to ProcessedImages list
+                
             }
         }
     }
