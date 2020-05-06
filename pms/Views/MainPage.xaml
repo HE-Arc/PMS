@@ -6,6 +6,14 @@
             <Color x:Key="Accent">#ad1457</Color>
             <Color x:Key="LightTextColor">#999999</Color>
             <Color x:Key="Background">#333333</Color>
+            <OnPlatform
+                x:TypeArguments="x:String" 
+                x:Key="FontAwesome">
+                <On Platform="Android" 
+                    Value="Fonts/FontAwesome.otf#Solid" />
+                <On Platform="iOS" 
+                    Value="Fonts/FontAwesome" />
+            </OnPlatform>
         </ResourceDictionary>
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
@@ -47,6 +55,7 @@
                 <Button Grid.Row="0" />
                 <pms:FontAwesomeLabel
                     Grid.Row="0"
+                    FontFamily="{StaticResource FontAwesome}"
                     Text="{x:Static pms:Icon.FASync}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
@@ -69,6 +78,7 @@
                 <Button Grid.Row="0" />
                 <pms:FontAwesomeLabel
                     Grid.Row="0"
+                    FontFamily="{StaticResource FontAwesome}"
                     Text="{x:Static pms:Icon.FACamera}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
@@ -85,6 +95,7 @@
                 <Button Grid.Row="0" />
                 <pms:FontAwesomeLabel
                     Grid.Row="0"
+                    FontFamily="{StaticResource FontAwesome}"
                     Text="{x:Static pms:Icon.FAImage}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
