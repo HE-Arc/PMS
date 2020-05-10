@@ -16,21 +16,46 @@ namespace pms.ViewModels
     public class ProcessedImageViewModel : BaseViewModel
     {
         public static string URL_UPLOAD_IMAGE = "https://pms.srvz-webapp.he-arc.ch/api/upload";
+        public static string URL_PROCESS_IMAGE = "https://pms.srvz-webapp.he-arc.ch/api/process/";
         public static string URL_LOAD_IMAGES = "https://pms.srvz-webapp.he-arc.ch/api/images";
         public static string URL_LOAD_IMAGE_BY_ID = "https://pms.srvz-webapp.he-arc.ch/api/image/";
 
         public MockDataStore DataStore { get; set;}
-        public List<ProcessedImage> ProcessedImages { get; set; }
+        public ObservableCollection<ProcessedImage> ProcessedImages { get; set; }
         public Command LoadProcessedImageCommand { get; set; }
 
         public int LastID { get; set; }
         public int FromID { get; set; }
 
+        private bool refreshIsVisible;
+        public bool RefreshIsVisible
+        {
+            get { return refreshIsVisible; }
+            set
+            {
+                refreshIsVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _activityIndicatorRunning;
+        public bool ActivityIndicatorIsRunning {
+            get
+            {
+                return _activityIndicatorRunning;
+            }
+            set
+            {
+                _activityIndicatorRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ProcessedImageViewModel()
         {
             Title = "PMS";
             DataStore = new MockDataStore();
-            ProcessedImages = new List<ProcessedImage>();
+            ProcessedImages = new ObservableCollection<ProcessedImage>();
             LoadProcessedImageCommand = new Command(async () => await ExecuteLoadProcessedImagesCommand());
         }
 
@@ -42,14 +67,7 @@ namespace pms.ViewModels
             {
                 ProcessedImages.Clear();
 
-                // TODO
-                // LoadProcessedImages();
-                // Remove code below then
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    ProcessedImages.Add(item);
-                }
+                await LoadProcessedImages();
             }
             catch (Exception ex)
             {
@@ -62,8 +80,10 @@ namespace pms.ViewModels
         }
 
         // Loads processed images from the backend API
-        public async Task<bool> LoadProcessedImages()
+        public async Task LoadProcessedImages()
         {
+            ActivityIndicatorIsRunning = true;
+
             // First load
             string url = URL_LOAD_IMAGES;
 
@@ -85,10 +105,18 @@ namespace pms.ViewModels
             }
 
             // Updates the FromID property
-            FromID = ProcessedImages[ProcessedImages.Count - 1].id - 1;
+            if (processedImages.Count > 0)
+            {
+                FromID = ProcessedImages[ProcessedImages.Count - 1].id;
+                RefreshIsVisible = true;
+            }
+            else
+            {
+                FromID = 0;
+                RefreshIsVisible = false;
+            }
 
-            // Can load more images
-            return FromID > 0;
+            ActivityIndicatorIsRunning = false;
         }
     }
 }
