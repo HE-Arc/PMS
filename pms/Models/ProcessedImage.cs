@@ -16,5 +16,7 @@ namespace pms.Models
         public string datetime { get; set; }
 
         public int count { get; set; }
+
+        public string GetImagePath => $"https://pms.srvz-webapp.he-arc.ch/api/image_file/{id}/base";
     }
 }
