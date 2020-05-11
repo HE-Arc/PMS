@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -13,7 +12,6 @@ using System.Net.Http;
 
 using pms.Models;
 using pms.ViewModels;
-using System.Linq;
 using System.Net.Http.Headers;
 
 namespace pms.Views
@@ -52,6 +50,7 @@ namespace pms.Views
         {
             if (photo != null)
             {
+                viewModel.ActivityIndicatorContainerVisible = true;
                 viewModel.ActivityIndicatorIsRunning = true;
                 
                 var httpClient = new HttpClient();
@@ -79,19 +78,13 @@ namespace pms.Views
 
                     if (processResponse.StatusCode == HttpStatusCode.OK)
                     {
-                        // Updates the LastID property when a new image is added
-                        viewModel.LastID++;
-
-                        // Loads the last image
-                        var imageJson = await httpClient.GetStringAsync(ProcessedImageViewModel.URL_LOAD_IMAGE_BY_ID + viewModel.LastID);
-
-                        // Adds the image to the beginning of the list
-                        ProcessedImage processedImage = JsonConvert.DeserializeObject<ProcessedImage>(imageJson);
-                        viewModel.ProcessedImages.Insert(0, processedImage);
+                        // Refreshes the images list
+                        await viewModel.ExecuteLoadProcessedImagesCommand();
                     }
                 }
 
                 viewModel.ActivityIndicatorIsRunning = false;
+                viewModel.ActivityIndicatorContainerVisible = false;
             }
         }
 

@@ -38,6 +38,20 @@ namespace pms.ViewModels
             }
         }
 
+        private bool _activityIndicatorContainerVisible;
+        public bool ActivityIndicatorContainerVisible
+        {
+            get
+            {
+                return _activityIndicatorContainerVisible;
+            }
+            set
+            {
+                _activityIndicatorContainerVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _activityIndicatorRunning;
         public bool ActivityIndicatorIsRunning {
             get
@@ -59,13 +73,14 @@ namespace pms.ViewModels
             LoadProcessedImageCommand = new Command(async () => await ExecuteLoadProcessedImagesCommand());
         }
 
-        async Task ExecuteLoadProcessedImagesCommand()
+        public async Task ExecuteLoadProcessedImagesCommand()
         {
             IsBusy = true;
 
             try
             {
                 ProcessedImages.Clear();
+                FromID = 0;
 
                 await LoadProcessedImages();
             }
@@ -82,6 +97,7 @@ namespace pms.ViewModels
         // Loads processed images from the backend API
         public async Task LoadProcessedImages()
         {
+            ActivityIndicatorContainerVisible = true;
             ActivityIndicatorIsRunning = true;
 
             // First load
@@ -108,7 +124,15 @@ namespace pms.ViewModels
             if (processedImages.Count > 0)
             {
                 FromID = ProcessedImages[ProcessedImages.Count - 1].id;
-                RefreshIsVisible = true;
+
+                if (FromID > 1)
+                {
+                    RefreshIsVisible = true;
+                }
+                else
+                {
+                    RefreshIsVisible = false;
+                }
             }
             else
             {
@@ -117,6 +141,7 @@ namespace pms.ViewModels
             }
 
             ActivityIndicatorIsRunning = false;
+            ActivityIndicatorContainerVisible = false;
         }
     }
 }
