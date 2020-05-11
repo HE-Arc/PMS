@@ -30,7 +30,6 @@
 
         <!-- Layout taking all the remaining space -->
         <StackLayout Grid.Row="0" Orientation="Vertical" VerticalOptions="StartAndExpand">
-            <ActivityIndicator IsRunning="{Binding ActivityIndicatorIsRunning}" Color="#ad1457" />
             <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadProcessedImageCommand}">
             <CollectionView x:Name="ProcessedImagesCollection" ItemsSource="{Binding ProcessedImages}">
                 <CollectionView.ItemTemplate>
@@ -65,6 +64,11 @@
                     <!-- Life Hack : otherwise, cannot click on the icon :) -->
                     <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="LoadMoreImagesButton_OnClicked" x:Name="LoadMoreImagesButton" />
                 </Grid>
+        </StackLayout>
+
+        <!-- Loading Activity Indicator -->
+        <StackLayout Grid.Row="0" Orientation="Vertical" VerticalOptions="Fill" BackgroundColor="#fff" Opacity="0.75" IsVisible="{Binding ActivityIndicatorContainerVisible}">
+            <ActivityIndicator VerticalOptions="CenterAndExpand" IsRunning="{Binding ActivityIndicatorIsRunning}" Color="#ad1457" />
         </StackLayout>
 
         <!-- Bottom fixed layout -->
