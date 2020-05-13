@@ -34,11 +34,10 @@
             <CollectionView x:Name="ProcessedImagesCollection" ItemsSource="{Binding ProcessedImages}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding id}" LineBreakMode="WordWrap" />
-                            <Label Text="{Binding datetime}" LineBreakMode="WordWrap" />
-                            <Label Text="{Binding count}" LineBreakMode="WordWrap" />
-                            <!--Image Source="{Binding GetImagePath}" /-->
+                        <StackLayout Orientation="Vertical" VerticalOptions="Center" Padding="15, 20, 15, 0">
+                            <Label FontSize="16" Text="{Binding datetime}" LineBreakMode="WordWrap" />
+                            <Label FontSize="16" Text="{Binding GetCount}" LineBreakMode="WordWrap" Padding="0, 0, 0, 15" />
+                            <BoxView Color="#d5d5d5" HeightRequest="1"></BoxView>
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnProcessedImageSelected">
                                 </TapGestureRecognizer>
@@ -48,27 +47,27 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             </RefreshView>
-            <Grid IsVisible="{Binding RefreshIsVisible}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Button Grid.Row="0" />
-                <pms:FontAwesomeLabel
-                    Grid.Row="0"
-                    FontFamily="{StaticResource FontAwesome}"
-                    Text="{x:Static pms:Icon.FASync}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    FontSize="30"
-                    TextColor="White" />
-                    <!-- Life Hack : otherwise, cannot click on the icon :) -->
-                    <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="LoadMoreImagesButton_OnClicked" x:Name="LoadMoreImagesButton" />
-                </Grid>
-        </StackLayout>
 
-        <!-- Loading Activity Indicator -->
-        <StackLayout Grid.Row="0" Orientation="Vertical" VerticalOptions="Fill" BackgroundColor="#fff" Opacity="0.75" IsVisible="{Binding ActivityIndicatorContainerVisible}">
-            <ActivityIndicator VerticalOptions="CenterAndExpand" IsRunning="{Binding ActivityIndicatorIsRunning}" Color="#ad1457" />
+            <!-- Refresh button -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Grid IsVisible="{Binding RefreshIsVisible}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" CornerRadius="20" />
+                    <pms:FontAwesomeLabel
+                        Grid.Row="0"
+                        FontFamily="{StaticResource FontAwesome}"
+                        Text="{x:Static pms:Icon.FASync}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontSize="25"
+                        TextColor="White" />
+                        <!-- Life Hack : otherwise, cannot click on the icon :) -->
+                    <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="LoadMoreImagesButton_OnClicked" x:Name="LoadMoreImagesButton" CornerRadius="20" />
+                </Grid>
+            </StackLayout>
+
         </StackLayout>
 
         <!-- Bottom fixed layout -->
@@ -110,6 +109,12 @@
                     <Button Grid.Row="0" BackgroundColor="Transparent" Clicked="MediaPickButton_OnClicked" x:Name="MediaPickButton" />
                 </Grid>
             </StackLayout>
-        </StackLayout>        
+        </StackLayout>
+
+        <!-- Loading Activity Indicator -->
+        <StackLayout Grid.Row="1" Orientation="Vertical" VerticalOptions="Fill" BackgroundColor="#fff" Opacity="0.75" IsVisible="{Binding ActivityIndicatorContainerVisible}">
+            <ActivityIndicator VerticalOptions="CenterAndExpand" IsRunning="{Binding ActivityIndicatorIsRunning}" Color="#ad1457" />
+        </StackLayout>
+
     </Grid>
 </ContentPage>
