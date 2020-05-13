@@ -38,8 +38,8 @@
                             <Label Text="{Binding id}" LineBreakMode="WordWrap" />
                             <Label Text="{Binding datetime}" LineBreakMode="WordWrap" />
                             <Label Text="{Binding count}" LineBreakMode="WordWrap" />
-                            <!--Image Source="{Binding GetImagePath}" /-->
-                            <StackLayout.GestureRecognizers>
+                                <Image Source="{Binding GetImagePath}" />
+                                <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnProcessedImageSelected">
                                 </TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
