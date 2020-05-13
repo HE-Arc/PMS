@@ -17,6 +17,8 @@ namespace pms.Models
 
         public int count { get; set; }
 
+        public string GetCount => $"Count {count}";
+
         public string GetImagePath => $"https://pms.srvz-webapp.he-arc.ch/api/image_file/{id}/base";
 
         public string GetProcessedImagePath => $"https://pms.srvz-webapp.he-arc.ch/api/image_file/{id}/processed";
