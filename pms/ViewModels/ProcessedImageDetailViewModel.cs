@@ -5,24 +5,25 @@ namespace pms.ViewModels
 {
     public class ProcessedImageDetailViewModel : BaseViewModel
     {
-        private int count;
+        public ProcessedImage ProcessedImage { get; set; }
 
-        public string ProcessedImage { get; set; }
-
-        public string BaseImage { get; set; }
-
-        public int Count 
+        public int Count
         {
-            get { return count; }
-            set { count = value; OnPropertyChanged("Count"); }
+            get
+            {
+                return ProcessedImage.count;
+            }
+            set
+            {
+                ProcessedImage.count = value;
+                OnPropertyChanged("ProcessedImage");
+            }
         }
 
         public ProcessedImageDetailViewModel(ProcessedImage processedImage = null)
         {
             Title = processedImage.datetime;
-            ProcessedImage = processedImage.processed_image;
-            BaseImage = processedImage.base_image;
-            Count = processedImage.count;
+            ProcessedImage = processedImage;
         }
     }
 }

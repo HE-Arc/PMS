@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,8 +11,8 @@ using Newtonsoft.Json;
 using System.Net.Http;
 
 using pms.Models;
-using pms.Views;
 using pms.ViewModels;
+using System.Net.Http.Headers;
 
 namespace pms.Views
 {
@@ -51,40 +50,41 @@ namespace pms.Views
         {
             if (photo != null)
             {
-                byte[] imageData;
+                viewModel.ActivityIndicatorContainerVisible = true;
+                viewModel.ActivityIndicatorIsRunning = true;
+                
+                var httpClient = new HttpClient();
+                var url = ProcessedImageViewModel.URL_UPLOAD_IMAGE;
+                var content = new MultipartFormDataContent();
 
-                using (var memoryStream = new MemoryStream())
+                var image = new StreamContent(photo.GetStream());
+                var filename = "tmp.jpg";
+                image.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                 {
-                    photo.GetStream().CopyTo(memoryStream);
-                    photo.Dispose();
+                    FileName = filename,
+                    Name = "base_image"
+                };
+                image.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                content.Add(image);
 
-                    imageData = memoryStream.ToArray();
+                var uploadResponse = await httpClient.PostAsync(url, content);
+                //var msg = await response.Content.ReadAsStringAsync();
+
+                if (uploadResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    httpClient = new HttpClient();
+                    url = ProcessedImageViewModel.URL_PROCESS_IMAGE + filename;
+                    var processResponse = await httpClient.GetAsync(url);
+
+                    if (processResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        // Refreshes the images list
+                        await viewModel.ExecuteLoadProcessedImagesCommand();
+                    }
                 }
 
-                // POST form
-                MultipartFormDataContent formData = new MultipartFormDataContent();
-                formData.Add(new ByteArrayContent(imageData), "base_image");
-
-                // Sends the image
-                HttpClient httpClient = new HttpClient();
-                HttpResponseMessage response = await httpClient.PostAsync(ProcessedImageViewModel.URL_UPLOAD_IMAGE, formData);
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    // Updates the LastID property when a new image is added
-                    viewModel.LastID++;
-
-                    // Loads the last image
-                    var imageJson = await httpClient.GetStringAsync(ProcessedImageViewModel.URL_LOAD_IMAGE_BY_ID + viewModel.LastID);
-
-                    // Adds the image to the beginning of the list
-                    ProcessedImage image = JsonConvert.DeserializeObject<ProcessedImage>(imageJson);
-                    viewModel.ProcessedImages.Insert(0, image);
-                }
-                else
-                {
-                    Console.WriteLine("Error while loading the last processed image...");
-                }
+                viewModel.ActivityIndicatorIsRunning = false;
+                viewModel.ActivityIndicatorContainerVisible = false;
             }
         }
 
@@ -183,6 +183,12 @@ namespace pms.Views
                 var photo = await CrossMedia.Current.PickPhotoAsync();
                 await ReadPhotoAsync(photo);
             }
+        }
+
+        // Click on Load More Images button
+        async void LoadMoreImagesButton_OnClicked(object sender, EventArgs e)
+        {
+            await viewModel.LoadProcessedImages();
         }
     }
 }

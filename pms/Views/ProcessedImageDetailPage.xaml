@@ -7,6 +7,14 @@
             <Color x:Key="Accent">#ad1457</Color>
             <Color x:Key="LightTextColor">#999999</Color>
             <Color x:Key="Background">#333333</Color>
+            <OnPlatform
+                x:TypeArguments="x:String" 
+                x:Key="FontAwesome">
+                <On Platform="Android" 
+                    Value="Fonts/FontAwesome.otf#Solid" />
+                <On Platform="iOS" 
+                    Value="Fonts/FontAwesome" />
+            </OnPlatform>
         </ResourceDictionary>
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
@@ -21,8 +29,8 @@
         <StackLayout Grid.Row="0" Orientation="Vertical" VerticalOptions="StartAndExpand">
             <StackLayout Padding="10">
                 <Label Text="{Binding Title}" LineBreakMode="WordWrap" />
-                <Label Text="{Binding Count}" LineBreakMode="WordWrap" />
-                <Image Source="https://suivezlezebre.com/wp-content/uploads/2019/11/te%CC%81moignage-de-ze%CC%80bre-surdoue%CC%81-philo-cognitif-1024x505.jpeg" />
+                <Label Text="{Binding ProcessedImage.count}" LineBreakMode="WordWrap" />
+                <Image Source="{Binding ProcessedImage.GetProcessedImagePath}"/>
             </StackLayout>
         </StackLayout>
 
@@ -38,6 +46,7 @@
                 <Button Grid.Row="0" />
                 <pms:FontAwesomeLabel
                     Grid.Row="0"
+                    FontFamily="{StaticResource FontAwesome}"
                     Text="{x:Static pms:Icon.FAPlus}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
@@ -54,6 +63,7 @@
                 <Button Grid.Row="0" />
                 <pms:FontAwesomeLabel
                     Grid.Row="0"
+                    FontFamily="{StaticResource FontAwesome}"
                     Text="{x:Static pms:Icon.FAMinus}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"

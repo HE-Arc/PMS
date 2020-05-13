@@ -5,6 +5,8 @@ using pms.ViewModels;
 using Xamarin.Forms.Internals;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace pms.Views
 {
@@ -22,14 +24,31 @@ namespace pms.Views
             BindingContext = this.viewModel = viewModel;
         }
 
-        private void PlusButton_OnClicked(object sender, EventArgs e)
+        async void PlusButton_OnClicked(object sender, EventArgs e)
         {
             viewModel.Count += 1;
+            await UpdateCountAsync(viewModel.ProcessedImage.id, viewModel.Count);
         }
 
-        private void MinusButton_OnClicked(object sender, EventArgs e)
+        async void MinusButton_OnClicked(object sender, EventArgs e)
         {
             viewModel.Count -= 1;
+            await UpdateCountAsync(viewModel.ProcessedImage.id, viewModel.Count);
+        }
+
+        async Task UpdateCountAsync(int id, int count)
+        {
+            var httpClient = new HttpClient();
+            var url = "https://pms.srvz-webapp.he-arc.ch/api/update/{id}/{count}";
+
+            var processResponse = await httpClient.GetAsync(url);
+
+            if(processResponse.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Debug.WriteLine("OK");
+            }
+
+            Debug.WriteLine("TEST");
         }
     }
 }
